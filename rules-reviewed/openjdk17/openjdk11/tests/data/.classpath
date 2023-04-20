@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="applet-api-deprecation"/>
+	<classpathentry kind="src" path="removed-classes"/>
+	<classpathentry kind="src" path="removed-packages"/>
+	<classpathentry kind="src" path="security-manager-deprecation"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
