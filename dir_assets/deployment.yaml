@@ -3,9 +3,9 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: sep9-app-web
+  name: sep10-app-web
   labels:
-    app.kubernetes.io/name: sep9-app
+    app.kubernetes.io/name: sep10-app
     app.kubernetes.io/component: web
 spec:
   strategy:
@@ -16,23 +16,25 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: sep9-app
+      app.kubernetes.io/name: sep10-app
       app.kubernetes.io/component: web
   template:
     metadata:
-      name: sep9-app-web
+      name: sep10-app-web
       labels:
-        app.kubernetes.io/name: sep9-app
+        app.kubernetes.io/name: sep10-app
         app.kubernetes.io/component: web
     spec:
       terminationGracePeriodSeconds: 60
-      serviceAccountName: sep9-app
+      serviceAccountName: sep10-app
       containers:
-      - name: sep9-app-web
-        image: "image-registry.openshift-image-registry.svc:5000/sep9-app-web:latest"
+      - name: sep10-app-web
+        image: "image-registry.openshift-image-registry.svc:5000/sep10-app-web:latest"
         imagePullPolicy: Always
         command: ["/bin/bash", "-c"]
-        args: ["JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/bin/jvmkill-1.17.0_RELEASE=printHeapHistogram=1 -Djava.io.tmpdir=$TMPDIR -XX:ActiveProcessorCount=$(nproc) -Djava.ext.dirs=$PWD/.java-buildpack/container_security_provider:$PWD/.java-buildpack/open_jdk_jre/lib/ext -Djava.security.properties=$PWD/.java-buildpack/java_security/java.security $JAVA_OPTS" && CALCULATED_MEMORY=$($PWD/.java-buildpack/open_jdk_jre/bin/java-buildpack-memory-calculator-3.13.0_RELEASE -totMemory=$MEMORY_LIMIT -loadedClasses=17259 -poolType=metaspace -stackThreads=250 -vmOptions="$JAVA_OPTS") && echo JVM Memory Configuration: $CALCULATED_MEMORY && JAVA_OPTS="$JAVA_OPTS $CALCULATED_MEMORY" && MALLOC_ARENA_MAX=2 SERVER_PORT=$PORT eval exec $PWD/.java-buildpack/open_jdk_jre/bin/java $JAVA_OPTS -cp $PWD/. org.springframework.boot.loader.JarLauncher"]
+        args:
+          - |
+            JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/bin/jvmkill-1.17.0_RELEASE=printHeapHistogram=1 -Djava.io.tmpdir=$TMPDIR -XX:ActiveProcessorCount=$(nproc) -Djava.ext.dirs=$PWD/.java-buildpack/container_security_provider:$PWD/.java-buildpack/open_jdk_jre/lib/ext -Djava.security.properties=$PWD/.java-buildpack/java_security/java.security $JAVA_OPTS" && CALCULATED_MEMORY=$($PWD/.java-buildpack/open_jdk_jre/bin/java-buildpack-memory-calculator-3.13.0_RELEASE -totMemory=$MEMORY_LIMIT -loadedClasses=17259 -poolType=metaspace -stackThreads=250 -vmOptions="$JAVA_OPTS") && echo JVM Memory Configuration: $CALCULATED_MEMORY && JAVA_OPTS="$JAVA_OPTS $CALCULATED_MEMORY" && MALLOC_ARENA_MAX=2 SERVER_PORT=$PORT eval exec $PWD/.java-buildpack/open_jdk_jre/bin/java $JAVA_OPTS -cp $PWD/. org.springframework.boot.loader.JarLauncher
         ports:
           - containerPort: 8080
             protocol: TCP
