@@ -3,9 +3,9 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: sep8-app-web
+  name: hello-spring-cloud-web
   labels:
-    app.kubernetes.io/name: sep8-app
+    app.kubernetes.io/name: hello-spring-cloud
     app.kubernetes.io/component: web
 spec:
   ports:
@@ -13,5 +13,5 @@ spec:
     port: 8080
     targetPort: 8080
   selector:
-    app.kubernetes.io/name: sep8-app
+    app.kubernetes.io/name: hello-spring-cloud
     app.kubernetes.io/component: web
