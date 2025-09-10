@@ -3,9 +3,9 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: sep10-app-web
+  name: sep8-app-web
   labels:
-    app.kubernetes.io/name: sep10-app
+    app.kubernetes.io/name: sep8-app
     app.kubernetes.io/component: web
 spec:
   strategy:
@@ -16,20 +16,20 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: sep10-app
+      app.kubernetes.io/name: sep8-app
       app.kubernetes.io/component: web
   template:
     metadata:
-      name: sep10-app-web
+      name: sep8-app-web
       labels:
-        app.kubernetes.io/name: sep10-app
+        app.kubernetes.io/name: sep8-app
         app.kubernetes.io/component: web
     spec:
       terminationGracePeriodSeconds: 60
-      serviceAccountName: sep10-app
+      serviceAccountName: sep8-app
       containers:
-      - name: sep10-app-web
-        image: "image-registry.openshift-image-registry.svc:5000/sep10-app-web:latest"
+      - name: sep8-app-web
+        image: "image-registry.openshift-image-registry.svc:5000/sep8-app-web:latest"
         imagePullPolicy: Always
         command: ["/bin/bash", "-c"]
         args:
