@@ -3,9 +3,9 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: first-push-web
+  name: nginx-web
   labels:
-    app.kubernetes.io/name: first-push
+    app.kubernetes.io/name: nginx
     app.kubernetes.io/component: web
 spec:
   strategy:
@@ -16,25 +16,25 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: first-push
+      app.kubernetes.io/name: nginx
       app.kubernetes.io/component: web
   template:
     metadata:
-      name: first-push-web
+      name: nginx-web
       labels:
-        app.kubernetes.io/name: first-push
+        app.kubernetes.io/name: nginx
         app.kubernetes.io/component: web
     spec:
       terminationGracePeriodSeconds: 60
-      serviceAccountName: first-push
+      serviceAccountName: nginx
       containers:
-      - name: first-push-web
-        image: "image-registry.openshift-image-registry.svc:5000/first-push-web:latest"
+      - name: nginx-web
+        image: "image-registry.openshift-image-registry.svc:5000/nginx-web:latest"
         imagePullPolicy: Always
         command: ["/bin/bash", "-c"]
         args:
           - |
-            $HOME/boot.sh
+            /docker-entrypoint.sh nginx -g daemon off;
         ports:
           - containerPort: 8080
             protocol: TCP
@@ -51,4 +51,4 @@ spec:
             command:
               - sh
               - -c
-              - "ps -ef | grep 'boot.sh' | grep -v grep"
+              - "ps -ef | grep 'off;' | grep -v grep"
